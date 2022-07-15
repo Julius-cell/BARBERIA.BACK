@@ -10,9 +10,9 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get()
-  index(@Res() res) {
-    res.status(302).redirect('/login');
-  }
+  // @Get()
+  // index(@Res() res) {
+  //   res.status(302).redirect('/login');
+  // }
 
 }

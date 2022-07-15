@@ -1,6 +1,6 @@
 {
   "name": "barberia-inglesa",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "author": "",
   "private": true,
@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
-    "@nestjs/platform-fastify": "^8.4.5",
     "mongodb": "^4.6.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
