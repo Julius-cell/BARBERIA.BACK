@@ -4,9 +4,9 @@ export class CreateStaffDTO {
   readonly rut: string;
   readonly phone: number;
   readonly address: string;
-  readonly birth_date: string;
+  readonly birth_date: Date;
   readonly gender: string;
-  readonly age: number;
-  readonly email_address: string;
-  readonly specialities:  string[];
+  readonly email: string;
+  readonly labors:  any[];
+  readonly createdAt:  Date;
 }
