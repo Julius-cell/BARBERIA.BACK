@@ -1,25 +1,59 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { MongoRepository } from 'typeorm';
-
 import { CreateLaborDTO } from './dto/labor.dto';
-import { Labor } from './entities/labors.entity';
+import { LaborsService } from './labors.service';
 
 @Controller('labors')
 export class LaborsController {
-  constructor(
-    @InjectRepository(Labor) 
-    private laborRepository: MongoRepository<Labor>
-  ) {}
+  constructor(private laborService: LaborsService) {}
 
-  @Post('/create')
-  async createLabor(@Res() res: Response, @Body() createLaborDTO: CreateLaborDTO) {
-    console.log(createLaborDTO);
-    await this.laborRepository.save(createLaborDTO);
+  @Get('')
+  async getAllLabors(@Res() res: Response) {
+    const labors = await this.laborService.getAllLabors();
 
     res.status(HttpStatus.OK).json({
-      message: 'received'
+      message: 'received',
+      data: labors
+    });
+  }
+
+  @Get(':id')
+  async getLabor(@Param() params, @Res() res: Response) {
+    const labors = await this.laborService.getLabor(params.id);
+
+    res.status(HttpStatus.OK).json({
+      message: 'received',
+      data: labors
+    });
+  }
+
+  @Post('/create')
+  async createLabor(@Res() res: Response, @Body() labor: CreateLaborDTO) {
+    const newLabor = await this.laborService.createLabor(labor);
+
+    res.status(HttpStatus.OK).json({
+      message: 'received',
+      data: newLabor
+    });
+  }
+
+  @Patch('/update/:id')
+  async updateLabor(@Param() params, @Res() res: Response, @Body() labor: CreateLaborDTO) {
+    const updatedLabor = await this.laborService.updateLabor(params.id, labor);
+
+    res.status(HttpStatus.OK).json({
+      message: 'received',
+      data: updatedLabor
+    });
+  }
+
+  @Delete('/delete/:id')
+  async deleteLabor(@Param() params, @Res() res: Response) {
+    const updatedLabor = await this.laborService.deleteLabor(params.id);
+    
+    res.status(HttpStatus.OK).json({
+      message: 'received',
+      data: updatedLabor
     });
   }
 }

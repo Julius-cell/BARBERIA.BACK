@@ -1,25 +1,60 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { MongoRepository } from 'typeorm';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 
-import { Staff } from './entities/staffs.entity';
 import { CreateStaffDTO } from './dto/staff.dto';
+import { StaffsService } from './staffs.service';
 
 @Controller('staffs')
 export class StaffsController {
-  constructor(
-    @InjectRepository(Staff) 
-    private staffRepository: MongoRepository<Staff>
-  ) {}
+  constructor(private staffService: StaffsService) {}
 
-  @Post('/create')
-  async createStaff(@Res() res: Response, @Body() createStaffDTO: CreateStaffDTO) {
-    console.log(createStaffDTO);
-    await this.staffRepository.save(createStaffDTO);
+  @Get('')
+  async getAllStaffs(@Res() res: Response) {
+    const staffs = await this.staffService.getAllStaffs();
 
     res.status(HttpStatus.OK).json({
-      message: 'received'
+      message: 'received',
+      data: staffs
+    });
+  }
+
+  @Get(':id')
+  async getStaff(@Param() params, @Res() res: Response) {
+    const staffs = await this.staffService.getStaff(params.id);
+
+    res.status(HttpStatus.OK).json({
+      message: 'received',
+      data: staffs
+    });
+  }
+
+  @Post('/create')
+  async createStaff(@Res() res: Response, @Body() staff: CreateStaffDTO) {
+    const newStaff = await this.staffService.createStaff(staff);
+
+    res.status(HttpStatus.OK).json({
+      message: 'received',
+      data: newStaff
+    });
+  }
+
+  @Patch('/update/:id')
+  async updateStaff(@Param() params, @Res() res: Response, @Body() staff: CreateStaffDTO) {
+    const updatedStaff = await this.staffService.updateStaff(params.id, staff);
+
+    res.status(HttpStatus.OK).json({
+      message: 'received',
+      data: updatedStaff
+    });
+  }
+
+  @Delete('/delete/:id')
+  async deleteStaff(@Param() params, @Res() res: Response) {
+    const updatedStaff = await this.staffService.deleteStaff(params.id);
+    
+    res.status(HttpStatus.OK).json({
+      message: 'received',
+      data: updatedStaff
     });
   }
 }
