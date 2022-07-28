@@ -1,7 +1,19 @@
+import { IsNotEmpty, IsNumber } from "class-validator";
+
 export class CreateClientDTO {
-  readonly id: number;
-  readonly name: string;
-  readonly email: string;
-  readonly phone: number;
-  readonly gender: string;
+  id: number;
+
+  @IsNotEmpty() 
+  name: string;
+
+  @IsNotEmpty() 
+  email: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  phone: number;
+
+  @IsNotEmpty() 
+  gender: string;
+
 }

@@ -1,7 +1,18 @@
+import { IsNotEmpty, IsNumber } from "class-validator";
+
 export class CreateAppointmentDTO {
-  readonly id: number;
-  readonly client_id: number;
-  readonly staff_id: number;
-  readonly service_id: number;
-  readonly createdAt:	string;
+  id: number;
+
+  @IsNotEmpty() 
+  client_id: number;
+
+  @IsNotEmpty() 
+  staff_id: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  service_id: number;
+
+  @IsNotEmpty() 
+  createdAt:	string;
 }
