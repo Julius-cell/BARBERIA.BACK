@@ -1,6 +1,16 @@
+import { IsNotEmpty, IsNumber } from "class-validator";
+
 export class CreateLaborDTO {
-  readonly id: number;
-  readonly name: string;
-  readonly price: number;
-  readonly duration: number;
+  id: number;
+
+  @IsNotEmpty() 
+  name: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  price: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  duration: number;
 }
